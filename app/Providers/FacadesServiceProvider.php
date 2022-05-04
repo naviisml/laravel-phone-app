@@ -23,5 +23,8 @@ class FacadesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->app->bind('phoneparser', function(){
+            return new \App\Services\PhoneParserService();
+        });
     }
 }
