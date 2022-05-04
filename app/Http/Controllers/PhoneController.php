@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\PhoneParser;
+use PhoneParser;
 
 class PhoneController extends Controller
 {
@@ -13,7 +13,14 @@ class PhoneController extends Controller
      */
     public function text(string $input = null)
     {
-        return PhoneParser::text($input);
+        $output = PhoneParser::text($input);
+
+        // TODO: Save the 'translation' to the database
+
+        return response()->json([
+            'input' => $input,
+            'output' => $output
+        ]);
     }
 
     /**
@@ -23,6 +30,13 @@ class PhoneController extends Controller
      */
     public function number(string $input = null)
     {
-        return PhoneParser::number($input);
+        $output = PhoneParser::number($input);
+
+        // TODO: Save the 'translation' to the database
+
+        return response()->json([
+            'input' => $input,
+            'output' => $output
+        ]);
     }
 }

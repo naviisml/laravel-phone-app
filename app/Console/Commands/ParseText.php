@@ -31,6 +31,8 @@ class ParseText extends Command
         $input = $this->argument('input');
         $output = PhoneParser::text($input);
 
+        // TODO: Save the 'translation' to the database
+
         $this->line("[{$output}]");
 
         return 0;

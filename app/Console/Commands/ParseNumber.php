@@ -31,6 +31,8 @@ class ParseNumber extends Command
         $input = $this->argument('input');
         $output = PhoneParser::number($input);
 
+        // TODO: Save the 'translation' to the database
+
         $this->line("[{$output}]");
 
         return 0;
