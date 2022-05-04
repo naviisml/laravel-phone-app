@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Facade;
 class PhoneParserService extends Facade
 {
     protected $algorithm = [
+        "HH" => "*22",
         "a" => "2",
         "b" => "22",
         "c" => "222",
@@ -74,6 +75,8 @@ class PhoneParserService extends Facade
             // check if the character is in the algorithm array (as key)
             if (isset($this->algorithm[$char])) {
                 $output .= $this->algorithm[$char];
+            } else {
+                $output .= $char;
             }
         }
 
@@ -98,17 +101,20 @@ class PhoneParserService extends Facade
         // loop over the input
         foreach ($array as $index => $char)
         {
-            // check if the next character is the same, add to string
-            if (isset($array[$index + 1]) && $array[$index + 1] == $char) {
-                $string .= $char;
+            // check if the input exists
+            if (isset($array[$index + 1]) && ($result = array_search($string . $array[$index + 1], $this->algorithm))) {
+                // save the next character to the string if the parsed result exists with the next character.
+                $string .= $array[$index + 1];
                 continue;
+            } else if (($result = array_search($string, $this->algorithm))) {
+                // otherwise, check if the parsed result exists and add it to the output
+                $output .= $result;
+            } else {
+                // Otherwise, add the input back to the output, without parsing
+                $output .= $string;
             }
 
-            // Look in array for result
-            if (($result = array_search($string, $this->algorithm))) {
-                $output .= $result;
-            }
-            // reset $string, set the next character
+            // Check if the next index exists, to prepare it
             if (isset($array[$index + 1])) {
                 $string = $array[$index + 1];
             }
