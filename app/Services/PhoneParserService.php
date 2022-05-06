@@ -6,8 +6,13 @@ use Illuminate\Support\Facades\Facade;
 
 class PhoneParserService extends Facade
 {
-    protected $algorithm = [
-        "HH" => "*22",
+    /**
+     * A array holding the translations for the algorithm
+     *
+     * @var array
+     */
+    protected array $algorithm = [
+        " " => "0",
         "a" => "2",
         "b" => "22",
         "c" => "222",
@@ -34,14 +39,13 @@ class PhoneParserService extends Facade
         "x" => "99",
         "y" => "999",
         "z" => "9999",
-        " " => "0",
     ];
     /**
      * Parse the input as text to number
      *
-     * @return  string  $this->textToNumber
+     * @return  void
      */
-    public function text(string $input = null)
+    public function text(string $input = null) : String
     {
         return $this->textToNumber($input);
     }
@@ -51,7 +55,7 @@ class PhoneParserService extends Facade
      *
      * @return  string  $this->numberToText
      */
-    public function number(string $input = null)
+    public function number(string $input = null) : String
     {
         return $this->numberToText($input);
     }
@@ -59,67 +63,64 @@ class PhoneParserService extends Facade
     /**
      * Parse the input as number to text
      *
-     * @return  string  $input
+     * @return  string  $output
      */
-    protected function textToNumber(string $input = null)
+    protected function textToNumber(string $input = null) : String
     {
         if (!$input) {
             return false;
         }
 
-        $array = str_split(strtolower($input));
-        $output = "";
-
-        // loop over the input
-        foreach ($array as $char) {
-            // check if the character is in the algorithm array (as key)
-            if (isset($this->algorithm[$char])) {
-                $output .= $this->algorithm[$char];
-            } else {
-                $output .= $char;
-            }
-        }
-
-        return $output;
+        return $input;
     }
 
     /**
      * Parse the input as number to text
      *
-     * @return  string  $input
+     * @return  string  $output
      */
-    protected function numberToText(string $input = null)
+    protected function numberToText(string $input = null) : String
     {
         if (!$input) {
             return false;
         }
 
-        $array = str_split(strtolower($input));
+        $array = str_split(strtolower($input), 1);
         $output = "";
-        $string = $array[0];
+        $string = "";
 
         // loop over the input
         foreach ($array as $index => $char)
         {
-            // check if the input exists
-            if (isset($array[$index + 1]) && ($result = array_search($string . $array[$index + 1], $this->algorithm))) {
-                // save the next character to the string if the parsed result exists with the next character.
-                $string .= $array[$index + 1];
-                continue;
-            } else if (($result = array_search($string, $this->algorithm))) {
-                // otherwise, check if the parsed result exists and add it to the output
-                $output .= $result;
-            } else {
-                // Otherwise, add the input back to the output, without parsing
-                $output .= $string;
+            // check if result exists
+            if (($result = array_search(($string . $char), $this->algorithm))) {
+                // edge case
+                if ($char == "0") {
+                    $output .= $result;
+                    continue;
+                }
+
+                $string .= $char;
             }
 
-            // Check if the next index exists, to prepare it
-            if (isset($array[$index + 1])) {
-                $string = $array[$index + 1];
+            // check if we are at the end of the line,
+            // or if the result with the next character doesnt exist
+            if (!isset($array[$index + 1]) || !array_search($string . $array[$index + 1], $this->algorithm)) {
+                // check if the current result exists,
+                // then save the result to the output
+                // OR save the string we tried to look-up to the output
+                if (($result = array_search($string, $this->algorithm))) {
+                    $output .= $result;
+                } else {
+                    $output .= $string;
+                }
+
+                // reset the lookup string
+                $string = "";
             }
         }
 
+        // return the results
         return $output;
     }
 }
