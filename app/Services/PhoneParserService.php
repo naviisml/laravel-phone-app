@@ -12,33 +12,34 @@ class PhoneParserService extends Facade
      * @var array
      */
     protected array $algorithm = [
-        " " => "0",
-        "a" => "2",
-        "b" => "22",
-        "c" => "222",
-        "d" => "3",
-        "e" => "33",
-        "f" => "333",
-        "g" => "4",
-        "h" => "44",
-        "i" => "444",
-        "j" => "5",
-        "k" => "55",
-        "l" => "555",
-        "m" => "6",
-        "n" => "66",
-        "o" => "666",
-        "p" => "7",
-        "q" => "77",
-        "r" => "777",
-        "s" => "7777",
-        "t" => "8",
-        "u" => "88",
-        "v" => "888",
-        "w" => "9",
-        "x" => "99",
-        "y" => "999",
-        "z" => "9999",
+        "*"		=>	"*",
+        " "		=>	"0",
+        "a"		=>	"2",
+        "b"		=>	"22",
+        "c"		=>	"222",
+        "d"		=>	"3",
+        "e"		=>	"33",
+        "f"		=>	"333",
+        "g"		=>	"4",
+        "h"		=>	"44",
+        "i"		=>	"444",
+        "j"		=>	"5",
+        "k"		=>	"55",
+        "l"		=>	"555",
+        "m"		=>	"6",
+        "n"		=>	"66",
+        "o"		=>	"666",
+        "p"		=>	"7",
+        "q"		=>	"77",
+        "r"		=>	"777",
+        "s"		=>	"7777",
+        "t"		=>	"8",
+        "u"		=>	"88",
+        "v"		=>	"888",
+        "w"		=>	"9",
+        "x"		=>	"99",
+        "y"		=>	"999",
+        "z"		=>	"9999",
     ];
     /**
      * Parse the input as text to number
@@ -71,7 +72,20 @@ class PhoneParserService extends Facade
             return false;
         }
 
-        return $input;
+        $array = str_split(strtolower($input), 1);
+        $output = "";
+
+        // loop over the input
+        foreach ($array as $index	=>	$char)
+        {
+            if (isset($this->algorithm[$char])) {
+                $output .= $this->algorithm[$char];
+            } else {
+                $output .= $char;
+            }
+        }
+
+        return $output;
     }
 
     /**
@@ -90,7 +104,7 @@ class PhoneParserService extends Facade
         $string = "";
 
         // loop over the input
-        foreach ($array as $index => $char)
+        foreach ($array as $index	=>	$char)
         {
             // check if result exists
             if (($result = array_search(($string . $char), $this->algorithm))) {
@@ -112,7 +126,7 @@ class PhoneParserService extends Facade
                 if (($result = array_search($string, $this->algorithm))) {
                     $output .= $result;
                 } else {
-                    $output .= $string;
+                    $output .= $char;
                 }
 
                 // reset the lookup string
