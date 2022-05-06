@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Facade;
-
-class PhoneParserService extends Facade
+class PhoneParserService
 {
     /**
      * A array holding the translations for the algorithm
