@@ -115,6 +115,9 @@ class PhoneParserService extends Facade
                 }
 
                 $string .= $char;
+            } else {
+                $output .= $char;
+                continue;
             }
 
             // check if we are at the end of the line,
@@ -125,12 +128,11 @@ class PhoneParserService extends Facade
                 // OR save the string we tried to look-up to the output
                 if (($result = array_search($string, $this->algorithm))) {
                     $output .= $result;
-                } else {
-                    $output .= $char;
                 }
 
                 // reset the lookup string
                 $string = "";
+                continue;
             }
         }
 
