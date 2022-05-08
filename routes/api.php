@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/parse/text/{input}', 'PhoneController@text')->name('parser.text');
 Route::get('/parse/number/{input}', 'PhoneController@number')->name('parser.number');
+
+// Authentication Routes...
+Route::get('/me', 'Auth\UserController@get');
+
+Route::post('/logout', 'Auth\LoginController@logout');
+
+// Guest Routes...
+Route::post('/login', 'Auth\LoginController@login');
+Route::post('/register', 'Auth\RegisterController@register');

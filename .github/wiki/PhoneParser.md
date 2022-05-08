@@ -2,6 +2,18 @@
 
 The `PhoneParser` Service can translate the 9-digit keyboard into the alphabet (a-z).
 
+## Flowchart
+
+- `Event`: can be described as a artisan command, or a route call
+- `Function`: can be described as executing the `PhoneParser::number` or `PhoneParse::text` function
+
+```mermaid
+sequenceDiagram
+    Client->>Controller: Send event
+    Controller->>Service: Function
+    Service-->>Client: Response
+```
+
 ## Usage
 
 ### Commands

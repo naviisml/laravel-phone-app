@@ -11,7 +11,7 @@
 				</li>
 				<span v-if="user">
 					<li class="nav-item">
-						<router-link class="nav-link" :to="{ name: 'user.user-profile' }">
+						<router-link class="nav-link" :to="{ name: 'user.user-dashboard' }">
 							Dashboard
 						</router-link>
 					</li>
