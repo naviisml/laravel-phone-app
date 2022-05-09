@@ -18,9 +18,9 @@ class UserController extends Controller
 	/**
 	 * Get the authenticated user
 	 *
-	 * @param   Request  $request
+	 * @param   \Illuminate\Http\Request  $request
 	 *
-	 * @return  App\Model\User
+	 * @return  \App\Model\User
 	 */
     public function get(Request $request)
     {

@@ -39,4 +39,11 @@ class PhoneController extends Controller
             'output' => $output
         ]);
     }
+
+    public function get()
+    {
+        $logs = Logs::type('translations')->get();
+
+        return response()->json($logs);
+    }
 }
