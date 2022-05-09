@@ -3,11 +3,10 @@
 ## Features
 
 - API
-- ~~Authentication~~
+- Authentication
 - Commands
 - Facades
-- ~~Tests~~
-- ~~Databasing~~
+- Tests
 
 ## Commands
 
