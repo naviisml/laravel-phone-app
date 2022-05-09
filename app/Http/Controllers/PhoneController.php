@@ -69,19 +69,21 @@ class PhoneController extends Controller
     /**
      * Return the translated logs
      *
+	 * @param   \Illuminate\Http\Request  $request
+     *
      * @return  array
      */
-    public function get()
+    public function logs(Request $request)
     {
         $user = $request->user();
 
         // check if the user is logged in
         if (!$user) {
-            return response()->json(['Not authenticated.', 404]);
+            return response()->json(['code' => 401, 'error' => 'Not authenticated.', 401]);
         }
 
         // retrieve the logs
-        $logs = Logs::type('translations')->get();
+        $logs = Log::where('action', 'translation')->paginate(25);
 
         return response()->json($logs);
     }
