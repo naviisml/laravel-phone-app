@@ -17,7 +17,7 @@ class LogoutTest extends TestCase
         $token = $this->postJson('/api/login', [
             'email' => User::factory()->create()->email,
             'password' => 'password',
-        ])->json()['token'];
+        ])->json()['token'] ?? false;
 
         $this->postJson("/api/logout?token=$token")
             ->assertSuccessful();
