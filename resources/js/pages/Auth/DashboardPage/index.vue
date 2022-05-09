@@ -11,7 +11,7 @@
             <tr v-for="log in logs" :key="log.id">
                 <td>{{ log.data.input }}</td>
                 <td>{{ log.data.output }}</td>
-                <td>{{ log.data.created_at }}</td>
+                <td>{{ log.created_at }}</td>
             </tr>
         </table>
 	</div>

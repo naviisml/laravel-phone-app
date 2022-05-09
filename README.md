@@ -73,6 +73,16 @@ php artisan test # Run the normal test cases
 php artisan dusk # Run the dusk test cases
 ```
 
+### Seeder
+
+**Logs**
+
+Creates 50 example translations
+
+```bash
+php artisan db:seed --class=TranslationSeeder
+```
+
 # Features
 
 ## Commands
