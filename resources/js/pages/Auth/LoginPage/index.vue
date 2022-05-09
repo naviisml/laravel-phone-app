@@ -10,13 +10,13 @@
 
 						<form @submit.prevent="attemptLogin">
 							<div class="form-group">
-								<label>Email</label>
-								<input class="form-control" type="email" v-model="form.email" placeholder="Email">
+								<label for="email">Email</label>
+								<input class="form-control" type="email" v-model="form.email" placeholder="Email" name="email" id="email">
 								<p v-if="form.hasError('email')" class="text-danger">{{ form.hasError('email').message }}</p>
 							</div>
 							<div class="form-group">
-								<label>Password</label>
-								<input class="form-control" type="password" v-model="form.password" placeholder="Password">
+								<label for="password">Password</label>
+								<input class="form-control" type="password" v-model="form.password" placeholder="Password" name="password" id="password">
 								<p v-if="form.hasError('password')" class="text-danger">{{ form.hasError('password').message }}</p>
 							</div>
 
