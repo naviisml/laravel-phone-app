@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/parse/text/{input}', 'PhoneController@text')->name('parser.text');
-Route::get('/parse/number/{input}', 'PhoneController@number')->name('parser.number');
+Route::post('/parse/text', 'PhoneController@text')->name('parser.text');
+Route::post('/parse/number', 'PhoneController@number')->name('parser.number');
 
 // Authentication Routes...
 Route::get('/me', 'Auth\UserController@get');

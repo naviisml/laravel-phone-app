@@ -36,6 +36,9 @@ class LoginController extends Controller
 
         $user = $this->guard()->user();
 
+        // Log the action
+        $user->log('login');
+
 		// Set the token
         $this->guard()->setToken($token);
 

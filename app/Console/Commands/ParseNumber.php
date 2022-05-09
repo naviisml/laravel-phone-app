@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Models\Log;
 use PhoneParser;
 
 class ParseNumber extends Command
@@ -31,9 +32,18 @@ class ParseNumber extends Command
         $input = $this->argument('input');
         $output = PhoneParser::number($input);
 
-        // TODO: Save the 'translation' to the database
+        // log the action
+		$log = Log::create([
+			'ip_address' => 'console',
+			'action' => 'translation',
+			'data' => [
+                'input' => $input ?? null,
+                'output' => $output ?? null
+            ],
+		]);
 
-        $this->line("[{$output}]");
+        // print the translation
+        $this->line("translated [{$input}] to [{$output}]");
 
         return 0;
     }

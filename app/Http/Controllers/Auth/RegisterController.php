@@ -30,6 +30,9 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, User $user)
     {
+        // Log the action
+        $user->log('registered');
+
         return response()->json($user);
     }
 
