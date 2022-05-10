@@ -26,4 +26,18 @@ class UserController extends Controller
     {
         return response()->json($request->user());
     }
+
+	/**
+	 * Get the logs for the authenticated user
+	 *
+	 * @param   \Illuminate\Http\Request  $request
+	 *
+	 * @return  \App\Model\Log
+	 */
+    public function logs(Request $request)
+    {
+        $user = $request->user();
+
+        return response()->json($user->logs());
+    }
 }

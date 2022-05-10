@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/parser/logs', 'ParserController@logs')->name('parser.logs');
-Route::post('/parser/text', 'ParserController@text')->name('parser.text');
-Route::post('/parser/number', 'ParserController@number')->name('parser.number');
-
 // Authentication Routes...
 Route::get('/me', 'Auth\UserController@get');
 
@@ -26,3 +22,13 @@ Route::post('/logout', 'Auth\LoginController@logout');
 // Guest Routes...
 Route::post('/login', 'Auth\LoginController@login');
 Route::post('/register', 'Auth\RegisterController@register');
+
+// Parser Routes...
+Route::get('/parser/logs', 'ParserController@logs')->name('parser.logs');
+Route::post('/parser/text', 'ParserController@text')->name('parser.text');
+Route::post('/parser/number', 'ParserController@number')->name('parser.number');
+
+// Log Routes...
+Route::get('/logs/{type?}', 'LogController@list')->name('logs');
+Route::get('/log/{id}', 'LogController@get');
+Route::delete('/log/{id}/delete', 'LogController@delete');

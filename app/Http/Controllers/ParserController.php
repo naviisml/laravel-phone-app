@@ -76,28 +76,6 @@ class ParserController extends Controller
         return response()->json($log);
     }
 
-    /**
-     * Return the translated logs
-     *
-	 * @param   \Illuminate\Http\Request  $request
-     *
-     * @return  array
-     */
-    public function logs(Request $request)
-    {
-        $user = $request->user();
-
-        // check if the user is logged in
-        if (!$user) {
-            return response()->json(['code' => 401, 'error' => 'Not authenticated.'], 401);
-        }
-
-        // retrieve the logs
-        $logs = Log::where('action', 'translation')->paginate(25);
-
-        return response()->json($logs);
-    }
-
 	/**
 	 * Return the client's REAL ip
 	 *

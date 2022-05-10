@@ -16,7 +16,7 @@ class TranslationSeeder extends Seeder
      */
     public function run()
     {
-        $input = Str::random(15);
+        $input = Str::random(10);
         $output = PhoneParser::text($input);
 
         Log::factory()
