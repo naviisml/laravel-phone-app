@@ -38,9 +38,9 @@ class LogController extends Controller
      *
 	 * @return  \App\Model\Log
      */
-    public function get(Request $request, $id)
+    public function get(Request $request, $id = null)
     {
-        $log = Log::find($id)->get();
+        $log = Log::find($id);
 
         // check if the log exists
         if (!$log) {
@@ -58,7 +58,7 @@ class LogController extends Controller
      *
 	 * @return  json
      */
-    public function delete(Request $request, $id)
+    public function delete(Request $request, $id = null)
     {
         $user = $request->user();
         $log = Log::find($id);
