@@ -22,6 +22,7 @@ class Character extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'character_id',
         'name',
         'height',
         'mass',
@@ -66,7 +67,7 @@ class Character extends Model
      */
 	public function getPlanetAttribute()
 	{
-		return $this->planet()->first();
+		return $this->planets()->first();
 	}
 
     /**
@@ -74,7 +75,7 @@ class Character extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function planet()
+    public function planets()
     {
         return $this->hasMany(Planet::class, 'id');
     }

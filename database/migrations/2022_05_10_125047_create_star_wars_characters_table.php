@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('star_wars_characters', function (Blueprint $table) {
             $table->id();
+            $table->string('character_id')->nullable();
             $table->string('name')->unique();
             $table->string('height')->nullable();
             $table->string('mass')->nullable();

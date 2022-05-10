@@ -14,7 +14,7 @@ class SwapiCharacter extends Command
      *
      * @var string
      */
-    protected $signature = 'swapi:character';
+    protected $signature = 'swapi:character {id?}';
 
     /**
      * The console command description.
@@ -58,13 +58,15 @@ class SwapiCharacter extends Command
      */
     public function handle()
     {
-        $this->character = $this->request("https://swapi.dev/api/people/" . rand(1, 83) . "/?format=json");
+        $id = $this->argument('id') ?? rand(1, 83);
+        $this->character = $this->request("https://swapi.dev/api/people/{$id}/?format=json");
         $this->planet = $this->request($this->character->homeworld);
 
         $character = $this->createOrUpdateCharacter();
         $planet = $this->createOrUpdatePlanet();
 
         $character->update([
+            'character_id' => $id,
             'homeworld' => $planet->id
         ]);
 
@@ -155,8 +157,6 @@ class SwapiCharacter extends Command
 
         return $character;
     }
-
-
 
     /**
      * Create or update a planet
