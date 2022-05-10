@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Log;
 use PhoneParser;
 
-class PhoneController extends Controller
+class ParserController extends Controller
 {
     /**
      * Handle a text request
@@ -19,18 +19,24 @@ class PhoneController extends Controller
     {
         $input = $request->get('text');
         $output = PhoneParser::text($input);
-        $user_id = $request->user()->id ?? false;
 
-        // log the action
-		$log = Log::create([
-			'user_id' => $user_id,
+        // prepare the log data
+        $data = [
 			'ip_address' => $this->getIpAddress(),
 			'action' => 'translation',
 			'data' => [
                 'input' => $input ?? null,
                 'output' => $output ?? null
             ],
-		]);
+		];
+
+        // add the user_id if there is a authenticated user
+        if (($user_id = $request->user()->id ?? null)) {
+            $data['user_id'] = $user_id;
+        }
+
+        // log the action
+		$log = Log::create($data);
 
         // return the output
         return response()->json($log);
@@ -47,23 +53,27 @@ class PhoneController extends Controller
     {
         $input = $request->get('number');
         $output = PhoneParser::number($input);
-        $user_id = $request->user()->id ?? false;
 
-        // log the action
-		$log = Log::create([
-			'user_id' => $user_id,
+        // prepare the log data
+        $data = [
 			'ip_address' => $this->getIpAddress(),
 			'action' => 'translation',
 			'data' => [
                 'input' => $input ?? null,
                 'output' => $output ?? null
             ],
-		]);
+		];
 
-        return response()->json([
-            'input' => $input,
-            'output' => $output
-        ]);
+        // add the user_id if there is a authenticated user
+        if (($user_id = $request->user()->id ?? null)) {
+            $data['user_id'] = $user_id;
+        }
+
+        // log the action
+		$log = Log::create($data);
+
+        // return the output
+        return response()->json($log);
     }
 
     /**
@@ -79,7 +89,7 @@ class PhoneController extends Controller
 
         // check if the user is logged in
         if (!$user) {
-            return response()->json(['code' => 401, 'error' => 'Not authenticated.', 401]);
+            return response()->json(['code' => 401, 'error' => 'Not authenticated.'], 401);
         }
 
         // retrieve the logs
