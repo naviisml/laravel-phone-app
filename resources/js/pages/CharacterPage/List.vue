@@ -12,11 +12,17 @@
                             <p>Played in {{ character.films.length }} movies</p>
 
                             <router-link class="btn" :to="{ name: 'character', params: { id: character.id } }">
-                                Read more <i class="fas fa-long-arrow-right"></i>
+                                Read more <i class="far fa-long-arrow-right ml-2"></i>
                             </router-link>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="d-flex justify-content-center" v-if="this.page < this.last_page">
+                <button class="btn btn-soft" @click="this.get(this.page + 1)">
+                    Load more <i class="far fa-long-arrow-down ml-2"></i>
+                </button>
             </div>
         </div>
 	</div>
@@ -31,6 +37,7 @@
         data() {
             return {
                 page: 1,
+                last_page: 1,
                 characters: []
             }
         },
@@ -51,6 +58,8 @@
                 const { data } = await axios.get(`/api/sw/characters?page=${page}`)
 
                 this.characters.push(...data.data)
+                this.page = page
+                this.last_page = data.last_page
             },
         }
 
