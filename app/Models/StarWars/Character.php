@@ -38,6 +38,15 @@ class Character extends Model
         'url',
     ];
 
+	/**
+	 * The accessors to append to the model's array.
+	 *
+	 * @var array
+	 */
+	protected $appends = [
+		'planet',
+	];
+
     /**
      * The attributes that should be cast.
      *
@@ -50,4 +59,23 @@ class Character extends Model
         'starships' => 'array',
     ];
 
+    /**
+     * Return the planets linked to the character
+     *
+     * @return \App\Models\StarWars\Planet
+     */
+	public function getPlanetAttribute()
+	{
+		return $this->planet()->first();
+	}
+
+    /**
+     * Return the planet linked to the character
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function planet()
+    {
+        return $this->hasMany(Planet::class, 'id');
+    }
 }

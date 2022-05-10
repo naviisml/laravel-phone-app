@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('eye_color')->nullable();
             $table->string('birth_year')->nullable();
             $table->string('gender')->nullable();
-            $table->string('homeworld')->nullable();
             $table->json('films')->nullable();
             $table->json('species')->nullable();
             $table->json('vehicles')->nullable();
