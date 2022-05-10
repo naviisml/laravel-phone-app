@@ -3,14 +3,14 @@
         <div class="card">
             <div class="card-content">
                 <h3 class="py-2">Translator</h3>
-                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p class="text-muted">This tool will translate your messages to a 9-digit system, just like our old phone's used to have! Just type whatever you like in the box and we will do the magic!</p>
 
                 <form class="row">
                     <!-- Text -->
                     <div class="col-md-6">
                         <div class="form-group py-3">
                             <label for="text">Text</label>
-                            <textarea class="form-control" type="text" v-model="parser.text" @input="lazyCaller(this.parser.text, this.translateText)" id="text"></textarea>
+                            <textarea class="form-control" type="text" v-model="parser.text" @input="lazyCaller(this.parser.text.toString(), this.translateText)" id="text" placeholder="How are you today?"></textarea>
                             <small class="text-muted">The text you want to parse to the number variant (minimum 4 letters)</small>
                         </div>
                     </div>
@@ -19,7 +19,7 @@
                     <div class="col-md-6">
                         <div class="form-group py-3">
                             <label for="number">Number</label>
-                            <textarea class="form-control" type="number" v-model="parser.number" @input="lazyCaller(this.parser.number, this.translateNumber)" id="number"></textarea>
+                            <textarea class="form-control" type="text" v-model="parser.number" @input="lazyCaller(this.parser.number.toString(), this.translateNumber)" id="number"></textarea>
                             <small class="text-muted">The number you want to parse to text variant (minimum 4 digits)</small>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                 clearTimeout(this.timeout)
 
                 this.timeout = setTimeout(() => {
-                    this.input = value.toString()
+                    this.input = value
 
                     if (!this.input) {
                         this.parser.text = ''
