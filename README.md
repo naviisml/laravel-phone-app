@@ -4,12 +4,28 @@
 
 - [Table of Contents](#table-of-contents)
 - [Features](#features)
-    - [Commands](#commands)
-    - [API](#api)
 - [Installation](#installation)
+    - [Composer](#composer)
+    - [NPM](#npm)
     - [Testing](#testing)
 
 _Please read through this to make sure you know all the ins and outs, thats less digging for you._
+
+## Features
+
+- Parse messages to and from the 9-digit phone layout
+    - [Commands](#commands)
+    - [API](#api)
+- Logs
+    - Extensive log messages
+    - Delete a log (which get logged under another `action`)
+- Authentication
+    - Login/logout
+    - Registering
+- Testing
+    - Seeders for User and Log creation
+    - Utilizing Dusk to test the browser functions
+    - Utilizing PHPUnit for Feature, Service and API testing
 
 # Installation
 
@@ -47,18 +63,7 @@ npm run watch # Compile the assets with hot-reloading
 npm run prod # Compile the assets for production
 ```
 
-## Usage
-
-**Example user**
-
-```
-php artisan db:seed --class=UserSeeder
-```
-
-**Email:** `admin@email.com`
-**Password:** `password`
-
-## Testing
+## Dusk
 
 **Step 1. Install dusk service**
 
@@ -73,7 +78,9 @@ php artisan test # Run the normal test cases
 php artisan dusk # Run the dusk test cases
 ```
 
-### Seeder
+# Usage
+
+## Seeder
 
 **Logs**
 
@@ -83,7 +90,14 @@ Creates 50 example translations
 php artisan db:seed --class=TranslationSeeder
 ```
 
-# Features
+**Example user**
+
+```
+php artisan db:seed --class=UserSeeder
+```
+
+**Email:** `admin@email.com`
+**Password:** `password`
 
 ## Commands
 
