@@ -25,7 +25,7 @@
                                         <td>{{ log.data.output }}</td>
                                         <td>{{ log.created_at }}</td>
                                         <td>
-                                            <v-button class="btn btn-soft btn-small btn-danger tooltip-left" aria-label="Delete" :loading="form.busy" @click="deleteLog(log.id)">
+                                            <v-button class="btn btn-soft btn-small btn-danger tooltip-left" aria-label="Delete" :loading="form.busy" @click="this.delete(log.id)">
                                                 <i class="far fa-trash"></i>
                                             </v-button>
                                         </td>
@@ -82,7 +82,7 @@
 
 		methods: {
 			async getData (page) {
-                const { data } = await axios.get(`/api/parser/logs?page=${page}`)
+                const { data } = await axios.get(`/api/logs/translation?page=${page}`)
 
                 this.busy = false
 				this.logs = data.data
@@ -107,6 +107,14 @@
 
 				this.setPage(this.page + 1)
 			},
+            async delete(id) {
+                const { data, status } = await axios.delete(`/api/log/${id}/delete`)
+
+                console.log(data)
+                if (status == 200) {
+			        this.getData(this.page)
+                }
+            },
 		}
 	}
 </script>
