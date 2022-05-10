@@ -1,26 +1,38 @@
 <template>
 	<div class="container py-5">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-start-3 col-md-end-9">
+                <div v-if="form.data && form.data.message" class="alert alert-danger mb-3" v-html="form.data.message"></div>
+
 				<div class="card">
 					<div class="card-content">
 						<h2 class="py-2">Sign In</h2>
 
-						<p v-if="form.data && form.data.message" class="text-danger" v-html="form.data.message"></p>
-
 						<form @submit.prevent="attemptLogin">
-							<div class="form-group">
+							<!-- Email -->
+							<div class="form-group py-3">
 								<label for="email">Email</label>
 								<input class="form-control" type="email" v-model="form.email" placeholder="Email" name="email" id="email">
-								<p v-if="form.hasError('email')" class="text-danger">{{ form.hasError('email').message }}</p>
-							</div>
-							<div class="form-group">
-								<label for="password">Password</label>
-								<input class="form-control" type="password" v-model="form.password" placeholder="Password" name="password" id="password">
-								<p v-if="form.hasError('password')" class="text-danger">{{ form.hasError('password').message }}</p>
+								<small v-if="form.hasError('email')" class="text-danger">{{ form.hasError('email').message }}</small>
 							</div>
 
-							<button class="btn btn-primary btn-block" type="submit">Sign In</button>
+							<!-- Password -->
+							<div class="form-group py-3">
+								<label for="password">Password</label>
+								<input class="form-control" type="password" v-model="form.password" placeholder="Password" name="password" id="password">
+								<small v-if="form.hasError('password')" class="text-danger">{{ form.hasError('password').message }}</small>
+							</div>
+
+							<!-- Remember Me -->
+							<div class="form-group py-3">
+								<input type="checkbox" id="remember" value="remember">
+								<label for="remember" class="text-muted">Remember me</label>
+							</div>
+
+                            <!-- Submit Button -->
+                            <v-button class="btn-block" :loading="form.busy" @click="form.busy = true">
+                                Sign In
+                            </v-button>
 						</form>
 					</div>
 				</div>
@@ -42,7 +54,8 @@
 			return {
 				form: new Form({
 					email: '',
-					password: ''
+					password: '',
+                    busy: false
 				})
 			}
 		},
@@ -50,6 +63,9 @@
 		methods: {
 			async attemptLogin() {
 				const { data } = await this.form.post('/api/login')
+
+                // set the state
+                this.form.busy = false
 
 				// Save the token.
 				this.$store.dispatch('auth/saveToken', {
