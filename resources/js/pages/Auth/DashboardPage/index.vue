@@ -8,10 +8,10 @@
                         <p class="text-muted">This page contains all the translations that have been done through this service.</p>
                     </div>
 
-                    <v-table endpoint="/api/logs/translation" :key="state" :data="['id', 'action', 'data', 'ip_filtered', 'created_at']">
-                        <template v-slot:actions="{ entry }">
+                    <v-table endpoint="/api/logs/translation" :data="['id', 'action', 'data', 'ip_filtered', 'created_at']">
+                        <template v-slot:actions="{ entry, refreshTable }">
                             <td>
-                                <v-button class="btn btn-soft btn-small btn-danger tooltip-left" aria-label="Delete" @click="this.delete(entry.id)">
+                                <v-button class="btn btn-soft btn-small btn-danger tooltip-left" aria-label="Delete" @click="this.delete(entry.id, refreshTable)">
                                     <i class="far fa-trash"></i>
                                 </v-button>
                             </td>
@@ -37,12 +37,14 @@
         },
 
         methods: {
-            async delete(id) {
+            async delete(id, callback) {
                 const { status } = await axios.delete(`/api/log/${id}/delete`)
 
-                // refresh the logs
+                // execute callback
                 if (status == 200) {
-			        this.state += 1
+                    if (typeof callback == 'function') {
+                        callback()
+                    }
                 }
             },
         }

@@ -17,7 +17,7 @@
                                 {{ entry[type] }}
                             </p>
                         </td>
-                        <slot name="actions" v-bind:entry="entry"></slot>
+                        <slot name="actions" v-bind:entry="entry" v-bind:refreshTable="refreshTable"></slot>
                     </tr>
                 </tbody>
             </table>
@@ -25,7 +25,7 @@
 		<!-- Table Controls -->
 		<div class="p-3">
 			<div class="d-flex">
-				<p class="text-muted">Page {{ page }} / {{ last_page }}</p>
+				<p class="text-muted">Page {{ current_page }} / {{ last_page }}</p>
 
 				<!-- Table Actions -->
 				<div class="ml-auto">
@@ -66,13 +66,13 @@
 			return {
 				last_page: 0,
 				result: null,
-				currentPage: 1,
+				current_page: 1,
 			}
 		},
 
 		created () {
-			this.currentPage = this.page
-			this.getData(this.currentPage)
+			this.current_page = this.page
+			this.getData(this.current_page)
 		},
 
 		methods: {
@@ -81,15 +81,18 @@
 				const { data } = await axios.get(url)
 
 				this.result = data.data
-				this.currentPage = data.current_page
+				this.current_page = data.current_page
 				this.last_page = data.last_page
 			},
 			previousPage() {
-				this.setPage(this.currentPage - 1)
+				this.setPage(this.current_page - 1)
 			},
 			nextPage() {
-				this.setPage(this.currentPage + 1)
+				this.setPage(this.current_page + 1)
 			},
+            refreshTable() {
+				this.getData(this.current_page)
+            },
 			setPage(page) {
 				if (page <= 0 || page > this.last_page) {
 					return false, console.error(`Page ${page} doesn't exist.`)
@@ -104,7 +107,6 @@
 .table-responsive {
     overflow: auto;
 }
-
 .table-responsive .table-controls {
     position: absolute;
 }
