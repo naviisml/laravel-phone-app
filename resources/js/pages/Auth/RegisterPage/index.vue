@@ -78,19 +78,24 @@
 		methods: {
 			async register () {
 				// Register the user.
-				const { data } = await this.form.post('/api/register')
+				const { status, data } = await this.form.post('/api/register')
 
-				// Log in the user.
-				const { data: { token } } = await this.form.post('/api/login')
+                // set the button state
+                this.form.busy = false
 
-				// Save the token.
-				this.$store.dispatch('auth/saveToken', { token })
+                if (status == 200) {
+                    // Log in the user.
+                    const { data: { token } } = await this.form.post('/api/login')
 
-				// Update the user.
-				await this.$store.dispatch('auth/updateUser', { user: data })
+                    // Save the token.
+                    this.$store.dispatch('auth/saveToken', { token })
 
-				// Redirect home.
-				this.$router.push({ name: 'user.user-dashboard' })
+                    // Update the user.
+                    await this.$store.dispatch('auth/updateUser', { user: data })
+
+                    // Redirect home.
+                    this.$router.push({ name: 'user.user-dashboard' })
+                }
 			}
 		}
 	}

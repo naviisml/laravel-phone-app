@@ -62,21 +62,23 @@
 
 		methods: {
 			async attemptLogin() {
-				const { data } = await this.form.post('/api/login')
+				const { status, data } = await this.form.post('/api/login')
 
-                // set the state
+                // set the button state
                 this.form.busy = false
 
-				// Save the token.
-				this.$store.dispatch('auth/saveToken', {
-					token: data.token
-				})
+                if (status == 200) {
+                    // Save the token.
+                    this.$store.dispatch('auth/saveToken', {
+                        token: data.token
+                    })
 
-				// Fetch the user.
-				await this.$store.dispatch('auth/fetchUser')
+                    // Fetch the user.
+                    await this.$store.dispatch('auth/fetchUser')
 
-				// Redirect to home
-				this.$router.push({ name: 'user.user-dashboard' })
+                    // Redirect to home
+                    this.$router.push({ name: 'user.user-dashboard' })
+                }
 			}
 		},
 	}
