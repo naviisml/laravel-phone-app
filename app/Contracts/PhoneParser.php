@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-interface PhoneParserServiceContract
+interface PhoneParserService
 {
     /**
      * Parse the input as text to number
