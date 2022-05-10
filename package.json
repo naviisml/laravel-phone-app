@@ -10,6 +10,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@naveldev/ui": "github:naveldev/ui",
         "axios": "^0.25",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",

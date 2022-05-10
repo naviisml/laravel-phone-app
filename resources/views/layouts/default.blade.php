@@ -11,6 +11,7 @@
 <body>
 	@yield('body')
 
+	<script src="/assets/js/fontawesome.js"></script>
 	@yield('javascript')
 </body>
 </html>
