@@ -8,7 +8,15 @@
                         <p class="text-muted">This page contains all the translations that have been done through this service.</p>
                     </div>
 
-                    <v-table endpoint="/api/logs/translation" :data="['action', 'data', 'ip_filtered', 'created_at']"></v-table>
+                    <v-table endpoint="/api/logs/translation" :data="['action', 'data', 'ip_filtered', 'created_at']">
+                        <template v-slot:actions>
+                            <td>
+                                <v-button class="btn btn-soft btn-small btn-danger tooltip-left" aria-label="Delete" @click="this.delete(log.id)">
+                                    <i class="far fa-trash"></i>
+                                </v-button>
+                            </td>
+                        </template>
+                    </v-table>
                 </div>
             </div>
         </div>

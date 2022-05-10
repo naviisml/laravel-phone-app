@@ -17,6 +17,7 @@
                                 {{ entry[type] }}
                             </p>
                         </td>
+                        <slot name="actions"></slot>
                     </tr>
                 </tbody>
             </table>
