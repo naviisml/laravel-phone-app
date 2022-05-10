@@ -28,6 +28,11 @@ Route::get('/parser/logs', 'ParserController@logs')->name('parser.logs');
 Route::post('/parser/text', 'ParserController@text')->name('parser.text');
 Route::post('/parser/number', 'ParserController@number')->name('parser.number');
 
+// Character Routes...
+Route::get('/sw/characters', 'CharacterController@get')->name('character.list');
+Route::get('/sw/character/{id}', 'CharacterController@get')->name('character.get');
+Route::delete('/sw/character', 'CharacterController@delete')->name('character.delete');
+
 // Log Routes...
 Route::get('/logs/{type?}', 'LogController@list')->name('logs');
 Route::get('/log/{id}', 'LogController@get');

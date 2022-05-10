@@ -15,7 +15,6 @@
 - [Usage](#usage)
     - [Seeder](#seeder)
     - [Commands](#commands)
-    - [API](#api)
 
 _Please read through this to make sure you know all the ins and outs, thats less digging for you._
 
@@ -169,53 +168,3 @@ php artisan parse:number <number>
 ```bash
 php artisan swapi:character
 ```
-
-## API
-
-### `GET` Logs
-
-Get the translated messages, paginated by 25. (For authenticated users only)
-
-**URL**
-
-```
-http://localhost:8000/api/parser/logs
-```
-
-**Parameters**
-
-| Key               | Value             |
-| ----------------- | ----------------- |
-| `page`            | The page you wanna see the results for |
-
-### `POST` Parse Text
-
-Parse a string to the number equivelent
-
-**URL**
-
-```
-http://localhost:8000/api/parser/text
-```
-
-**Parameters**
-
-| Key               | Value             |
-| ----------------- | ----------------- |
-| `string`          | The string you want to parse |
-
-### `POST` Parse Number
-
-Parse a number to the string equivelent
-
-**URL**
-
-```
-http://localhost:8000/api/parser/number
-```
-
-**Parameters**
-
-| Key               | Value             |
-| ----------------- | ----------------- |
-| `number`          | The number you want to parse |

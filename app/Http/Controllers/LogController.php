@@ -25,7 +25,6 @@ class LogController extends Controller
      */
     public function list(Request $request, string $type = null)
     {
-        $user = $request->user();
         $logs = $type ? Log::where('action', $type)->orderBy('id', 'DESC')->paginate(25) : Log::orderBy('id', 'DESC')->paginate(25);
 
         return response()->json($logs);
@@ -41,7 +40,6 @@ class LogController extends Controller
      */
     public function get(Request $request, $id)
     {
-        $user = $request->user();
         $log = Log::find($id)->get();
 
         // check if the log exists
@@ -58,7 +56,7 @@ class LogController extends Controller
 	 * @param   \Illuminate\Http\Request  $request
 	 * @param   boolean $id
      *
-	 * @return  \App\Model\Log
+	 * @return  json
      */
     public function delete(Request $request, $id)
     {
