@@ -1,12 +1,17 @@
 <template>
 	<nav class="nav-top">
 		<div class="container d-flex py-2">
-			<h3 class="nav-branding pt-2">Branding</h3>
+			<h3 class="nav-branding pt-2">Awesome Website</h3>
 
 			<ul class="nav-list ml-auto">
 				<li class="nav-item">
 					<router-link class="nav-link" :to="{ name: 'home' }">
 						Home
+					</router-link>
+				</li>
+				<li class="nav-item">
+					<router-link class="nav-link" :to="{ name: 'characters' }">
+						Characters
 					</router-link>
 				</li>
 				<span v-if="user">

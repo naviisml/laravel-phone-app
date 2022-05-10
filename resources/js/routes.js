@@ -9,6 +9,20 @@ export const routes = [
 		component: Container('HomePage')
 	},
 
+    // Character Routes...
+	{
+		path: '/characters',
+		name: 'characters',
+		component: Container('CharacterPage/List')
+	},
+
+	{
+		path: '/character/:id',
+		name: 'character',
+		component: Container('CharacterPage/Character')
+	},
+
+    // Auth Routes...
 	{
 		path: '/login',
 		name: 'login',
