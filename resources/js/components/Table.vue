@@ -8,9 +8,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="entry in result" :key="entry.id">
+                    <tr v-for="entry in result" :key="entry.id ?? false">
                         <td v-for="type in data" :key="type">
-                            <span class="badge mr-2" v-if="typeof entry[type] == 'object'" v-for="(value, key) in entry[type]" :key="value.id">
+                            <span class="badge mr-2" v-if="typeof entry[type] == 'object'" v-for="(value, key) in entry[type]" :key="key">
                                 {{ key }}: {{ value }}
                             </span>
                             <p v-else>
