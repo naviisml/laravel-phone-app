@@ -20,20 +20,26 @@ _Please read through this to make sure you know all the ins and outs, thats less
 
 ## Features
 
-- Parse messages to and from the 9-digit phone layout
+- **Parser**
     - [Commands](#commands)
-    - [API](#api)
-    - Front-End interface for users
+    - Front-End interface
     - (+++) History of last 4 translations (saved locally)
     - (+++) Remove translation from history
-- (+++) Scheduled Command: _Every hour, the `php artisan swapi:character` command gets executed which creates or updates a character in our database._
-- Logs
+- **Logs**
     - (+++) Extensive log messages
     - (+++) Delete a log (which get logged under another `action`)
-- Authentication
+- **swapi.dev** _Every hour, the `php artisan swapi:character` command gets executed which creates or updates a character in our database._
+    - (+++) Retrieve a character every hour
+    - (+++) Save or update the character to the database
+    - (+++) Save or update the accosiated planet of the character to the database
+- **API**
+    - API for Parser
+    - API for Logs
+    - API for Characters
+- **Authentication**
     - Login/logout
     - Registering
-- Testing
+- **Testing**
     - Seeders for User and Log creation
     - Utilizing Dusk to test the browser functions
     - Utilizing PHPUnit for Feature, Service and API testing
