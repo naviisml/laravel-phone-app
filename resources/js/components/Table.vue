@@ -17,7 +17,7 @@
                                 {{ entry[type] }}
                             </p>
                         </td>
-                        <slot name="actions"></slot>
+                        <slot name="actions" v-bind:entry="entry"></slot>
                     </tr>
                 </tbody>
             </table>
