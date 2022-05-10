@@ -26,7 +26,7 @@ class LogController extends Controller
     public function list(Request $request, string $type = null)
     {
         $user = $request->user();
-        $logs = $type ? Log::where('action', $type)->paginate(25) : Log::paginate(25);
+        $logs = $type ? Log::where('action', $type)->orderBy('id', 'DESC')->paginate(25) : Log::orderBy('id', 'DESC')->paginate(25);
 
         return response()->json($logs);
     }
@@ -69,6 +69,9 @@ class LogController extends Controller
         if (!$log->get()) {
             return response()->json(['code' => 404, 'error' => 'Log not found'], 404);
         }
+
+        // log that the user deleted the log
+        $user->log('log.delete', [], ['log' => $log]);
 
         // delete the log
         $log->delete();

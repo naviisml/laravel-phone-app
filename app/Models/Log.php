@@ -22,6 +22,15 @@ class Log extends Model
         'metadata',
     ];
 
+	/**
+	 * The accessors to append to the model's array.
+	 *
+	 * @var array
+	 */
+	protected $appends = [
+		'ip_filtered',
+	];
+
     /**
      * The attributes that should be cast.
      *
@@ -41,4 +50,26 @@ class Log extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+	/**
+	 * Filter a IP address
+	 *
+	 * @return  string
+	 */
+	public function getIpFilteredAttribute()
+	{
+		$ip_array = explode('.', $this->ip_address);
+		$new_ip = [];
+		$i = 0;
+
+		foreach($ip_array as $part) {
+			if($part != $ip_array[0] && $part != end($ip_array)) {
+				$new_ip[$i++] = str_repeat("*", strlen($part));
+			} else {
+				$new_ip[$i++] = $part;
+			}
+		}
+
+		return implode('.', $new_ip);
+	}
 }
