@@ -11,6 +11,7 @@
                         <div class="form-group py-3">
                             <label for="text">Text</label>
                             <textarea class="form-control" type="text" v-model="parser.text" @input="lazyCaller(this.parser.text, this.translateText)" id="text"></textarea>
+                            <small class="text-muted">The text you want to parse to the number variant (minimum 4 letters)</small>
                         </div>
                     </div>
 
@@ -19,26 +20,30 @@
                         <div class="form-group py-3">
                             <label for="number">Number</label>
                             <textarea class="form-control" type="number" v-model="parser.number" @input="lazyCaller(this.parser.number, this.translateNumber)" id="number"></textarea>
+                            <small class="text-muted">The number you want to parse to text variant (minimum 4 digits)</small>
                         </div>
                     </div>
                 </form>
             </div>
 		</div>
 
-        <h3 class="py-3">Recent translations</h3>
-        <div class="row" v-if="history">
-            <div v-for="(value, key) in history" :key="key" class="col-md-3">
-                <div class="card">
-                    <a class="float-right p-2" @click="this.removeHistory(key)"><i class="fas fa-times"></i></a>
+        <div v-if="history.length >= 1">
+            <h3 class="py-3">Recent translations</h3>
 
-                    <div class="card-content">
-                        <strong class="text-muted"><small>Input</small></strong>
-                        <p>{{ value.input }}</p>
-                    </div>
+            <div class="row">
+                <div v-for="(value, key) in history" :key="key" class="col-md-3">
+                    <div class="card">
+                        <a class="float-right p-2" @click="this.removeHistory(key)"><i class="fas fa-times"></i></a>
 
-                    <div class="card-content">
-                        <strong class="text-muted"><small>Output</small></strong>
-                        <p>{{ value.output }}</p>
+                        <div class="card-content">
+                            <strong class="text-muted"><small>Input</small></strong>
+                            <p>{{ value.input }}</p>
+                        </div>
+
+                        <div class="card-content">
+                            <strong class="text-muted"><small>Output</small></strong>
+                            <p>{{ value.output }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,8 +89,18 @@
                 this.timeout = setTimeout(() => {
                     this.input = value.toString()
 
+                    if (!this.input) {
+                        this.parser.text = ''
+                        this.parser.number = ''
+                        return false
+                    }
+
+                    if (this.input.length <= 3) {
+                        return false
+                    }
+
                     if (typeof callback == 'function') {
-                        callback(this.input)
+                        return callback(this.input)
                     }
                 }, 1000)
             },
@@ -97,6 +112,8 @@
              * @return  {void}
              */
             async translateText(input = null) {
+                if (!input) return
+
                 const { data } = await axios.post('/api/parser/text', {
                     text: input
                 })
@@ -121,6 +138,8 @@
              * @return  {void}
              */
             async translateNumber(input = null) {
+                if (!input) return
+
                 const { data } = await axios.post('/api/parser/number', {
                     number: input
                 })
